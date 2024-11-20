@@ -28,7 +28,7 @@ int init_module(void)
 	int rv = -EPERM, i = 0, cnt = 0, sum = 0, val = 0;
 	char *m = NULL;
 	if ((0 < m_size) && (M_SIZE_MAX > m_size) &&
-			(0 < m_min_val) && (0 < m_max_val) &&
+			(0 <= m_min_val) && (0 < m_max_val) &&
 			(m_min_val < m_max_val)
 			)
 	{
@@ -39,6 +39,7 @@ int init_module(void)
 
 			for (i = 0; i < cnt; i++)
 			{
+				val = get_random_u8();
 				while (!CHECK_VAL(m_min_val, m_max_val, val))
 				{
 					val = get_random_u8(); /* bad function cause 0..255 */
