@@ -18,5 +18,4 @@ int my_alert(const char *name, const char *msg)
 	return rv = 0;
 }
 
-
 EXPORT_SYMBOL(my_alert);

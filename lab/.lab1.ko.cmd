@@ -1,0 +1,1 @@
+cmd_/home/.s2xxx/.git/edu/lab/lab1.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T arch/x86/module.lds -o /home/.s2xxx/.git/edu/lab/lab1.ko /home/.s2xxx/.git/edu/lab/lab1.o /home/.s2xxx/.git/edu/lab/lab1.mod.o;  true

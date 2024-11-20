@@ -1,0 +1,1 @@
+cmd_/home/.s2xxx/.git/edu/param/Module.symvers :=  sed 's/ko$$/o/'  /home/.s2xxx/.git/edu/param/modules.order | scripts/mod/modpost -m      -o /home/.s2xxx/.git/edu/param/Module.symvers -e -i Module.symvers -T - 

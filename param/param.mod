@@ -1,0 +1,1 @@
+/home/.s2xxx/.git/edu/param/param.o
