@@ -1,4 +1,5 @@
 #include <linux/module.h>
+#include <linux/slab.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("s2xxx");
@@ -12,7 +13,7 @@ static int m_min_val = 0;
 static int m_max_val = 100;
 
 module_param(m_size, int, 0644);
-MODULE_PARM_DESC(m_size, "Massiv size (1..%d)", M_SIZE_MAX);
+MODULE_PARM_DESC(m_size, "Massiv size (1..10)"); // todo M_SIZE_MAX
 
 module_param(m_min_val, int, 0644);
 MODULE_PARM_DESC(m_min_val, "Massiv minimum value");
