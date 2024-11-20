@@ -1,5 +1,4 @@
 #include <linux/module.h>
-#include <linux/slab.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("s2xxx");
@@ -12,7 +11,7 @@ MODULE_AUTHOR("s2xxx");
 static int m_size = 2;
 
 module_param(m_size, int, 0644);
-MODULE_PARM_DESC(m_count, "Massiv size (1..100)");
+MODULE_PARM_DESC(m_size, "Massiv size (1..100)");
 
 int init_module(void)
 {
@@ -23,7 +22,7 @@ int init_module(void)
 		cnt = m_size * m_size;
 		if (NULL != (m = kmalloc(cnt, GFP_KERNEL)))
 		{
-			printk(KERN_INFO MOD_NAME ": size %i\n", m_size);
+			printk(KERN_INFO MOD_NAME ": massiv size %i\n", m_size);
 			for (i = 0; i < cnt; i++)
 			{
 				m[i] = get_random_u8();
@@ -38,7 +37,7 @@ int init_module(void)
 				sum += m[i];
 			}
 
-			printk(KERN_INFO MOD_NAME "\n summ is %i", sum);
+			printk(KERN_INFO MOD_NAME "\n summ is %i\n", sum);
 
 			kfree(m);
 			rv = 0;
