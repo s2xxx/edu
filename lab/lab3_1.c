@@ -54,10 +54,10 @@ int init_module(void)
 
 			for (i = 0; i < cnt; i++)
 			{
-				val = get_random_u8();
+				val = get_random_u32();
 				while (!CHECK_VAL(m_min_val, m_max_val, val))
 				{
-					val = get_random_u8();
+					val = get_random_u32();
 				}
 				m[i] = val;
 
