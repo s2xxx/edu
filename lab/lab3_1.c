@@ -1,5 +1,9 @@
 #include <linux/module.h>
 #include <linux/slab.h>
+#include <linux/fs.h>
+#include <asm/segment.h>
+#include <asm/uaccess.h>
+#include <linux/buffer_head.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("s2xxx");
@@ -7,6 +11,7 @@ MODULE_AUTHOR("s2xxx");
 #define MOD_NAME "Module Lab3 "
 
 #define M_SIZE_MAX (10)
+#define OUTPUT_FILE_NAME "/tmp/output.txt"
 
 static int m_size = 2;
 static int m_min_val = 0;
@@ -25,7 +30,7 @@ MODULE_PARM_DESC(m_max_val, "Massiv maximum value");
 
 int init_module(void)
 {
-	int rv = -EPERM, i = 0, cnt = 0, sum = 0, val = 0;
+	int rv = -EPERM, i = 0, cnt = 0, sum = 0, val = 0, pos = 0, ret = 0;
 	char *m = NULL;
 	if ((0 < m_size) && (M_SIZE_MAX >= m_size) &&
 			(0 <= m_min_val) && (0 < m_max_val) &&
@@ -39,10 +44,10 @@ int init_module(void)
 
 			for (i = 0; i < cnt; i++)
 			{
-				val = get_random_u32();
+				val = get_random_u8();
 				while (!CHECK_VAL(m_min_val, m_max_val, val))
 				{
-					val = get_random_u32();
+					val = get_random_u8();
 				}
 				m[i] = val;
 
@@ -57,6 +62,20 @@ int init_module(void)
 			}
 
 			printk(KERN_INFO MOD_NAME "\n summ is %i\n", sum);
+
+			struct file *o_fp;
+			o_fp = filp_open(OUTPUT_FILE_NAME, O_RDWR | O_CREAT, 0644);
+			if (!IS_ERR(o_fp)){
+				printk(KERN_INFO "output file open error/n");
+				pos = 0;
+				kernel_write(o_fp, m, cnt, &pos);
+				kernel_write(o_fp, sum, sizeof(sum), &pos);
+				filp_close(o_fp, NULL);
+			}
+			else
+			{
+				printk(KERN_WARNING MOD_NAME "Can`t access to %s\n", OUTPUT_FILE_NAME);
+			}
 
 			kfree(m);
 			rv = 0;
