@@ -29,8 +29,8 @@ static int m_size_set(const char *val, const struct kernel_param *kp);
 
 static const struct kernel_param_ops kp_ops =
 {
-	.set = m_size_set,
-	.get = param_get_int
+	.set = &m_size_set,
+	.get = &param_get_int
 };
 
 module_param_cb(m_size, &kp_ops, &m_size, 0644);
