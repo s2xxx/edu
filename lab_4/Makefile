@@ -11,3 +11,8 @@ default:
 	
 clean:
 	$(MAKE) -C $(KERNEL_DIR) M=$(PWD) clean
+	
+prog: my_rand_reader.o
+
+my_rand_reader.o: my_rand_reader.c
+	gcc my_rand_reader.c -o my_rand_reader
