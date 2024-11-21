@@ -112,6 +112,8 @@ static int m_size_set(const char *m_size_str, const struct kernel_param *kp)
 
 	ret = kstrtoint(m_size_str, 10, &val);
 
+	printk(KERN_INFO DEV_NAME ":Try set m_size %s \n", m_size_str);
+
 	if ((0 == ret) && (val > 0) && (val < M_SIZE_MAX))
 	{
 		if (m_size != val)
