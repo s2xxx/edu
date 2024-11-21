@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("s2xxx");
 
-#define MOD_NAME "Module Lab3 "
+#define MOD_NAME "Module Lab3_1 "
 
 #define M_SIZE_MAX (10)
 #define OUTPUT_FILE_NAME "/tmp/output.txt"
@@ -62,18 +62,16 @@ int init_module(void)
 				m[i] = val;
 
 				/* Print now for prevent also one for-loop */
-				if (0 == (i % cnt))
+				if ((0 != i) && (0 == (i % cnt))) /* 0 != i for skip first iteration */
 				{
-					printk(KERN_INFO MOD_NAME "\n");
+					len = sprintf(outbuff, "\n");
+					kernel_write(o_fp, outbuff, len, &pos);
 				}
 				if (!IS_ERR(o_fp))
 				{
 					len = sprintf(outbuff, "%d ", val);
 					kernel_write(o_fp, outbuff, len, &pos);
 				}
-
-				printk(KERN_INFO MOD_NAME "%i", m[i]);
-
 				sum += m[i];
 			}
 
@@ -81,6 +79,10 @@ int init_module(void)
 
 			if (!IS_ERR(o_fp))
 			{
+				len = sprintf(outbuff, "\n");
+				kernel_write(o_fp, outbuff, len, &pos);
+				len = sprintf(outbuff, "sum:");
+				kernel_write(o_fp, outbuff, len, &pos);
 				len = sprintf(outbuff, "%d ", sum);
 				kernel_write(o_fp, outbuff, len, &pos);
 				filp_close(o_fp, NULL);
