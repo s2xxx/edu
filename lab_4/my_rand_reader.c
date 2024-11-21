@@ -34,17 +34,15 @@ int main(void)
 {
 	FILE *f = NULL;
 	size_t rv = 0;
-	char buff[BUFSIZE] = {0};
+	char val = {0};
 	if (NULL != (f = fopen(FILENAME, "rb")))
 	{
-		if (1 != (rv = fread(buff, sizeof(buff), 1, f)))
+		while (fread(&val, 1, 1, f))
 		{
-			printf("Error %i:%i", __LINE__, rv);
+			printf("%i ", val);
 		}
-		else
-		{
-			printf("OK");
-		}
+
+		printf("\nEnd\n");
 
 		fclose(f);
 	}
