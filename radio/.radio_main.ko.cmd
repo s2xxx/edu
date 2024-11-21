@@ -1,0 +1,1 @@
+cmd_/home/.s2xxx/.git/edu/radio/radio_main.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T arch/x86/module.lds -o /home/.s2xxx/.git/edu/radio/radio_main.ko /home/.s2xxx/.git/edu/radio/radio_main.o /home/.s2xxx/.git/edu/radio/radio_main.mod.o;  true
