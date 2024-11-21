@@ -8,7 +8,7 @@
 #define DEV_NAME "my_rand"
 
 #define M_SIZE_MAX (10)
-#define M_DEV_NUM_DEF (242)
+#define M_DEV_NUM_DEF (442)
 
 #define CHECK_VAL(_min, _max, _v) ((_min<(_v))&&(_max>(_v)))
 /* Enum, struct, union ------------------------------------------------------*/
