@@ -30,8 +30,10 @@ MODULE_PARM_DESC(m_max_val, "Massiv maximum value");
 
 int init_module(void)
 {
-	int rv = -EPERM, i = 0, cnt = 0, sum = 0, val = 0, pos = 0, ret = 0;
+	int rv = -EPERM, i = 0, cnt = 0, sum = 0, val = 0;
+	loff_t pos = 0;
 	char *m = NULL;
+	struct file *o_fp;
 	if ((0 < m_size) && (M_SIZE_MAX >= m_size) &&
 			(0 <= m_min_val) && (0 < m_max_val) &&
 			(m_min_val < m_max_val)
@@ -63,13 +65,12 @@ int init_module(void)
 
 			printk(KERN_INFO MOD_NAME "\n summ is %i\n", sum);
 
-			struct file *o_fp;
 			o_fp = filp_open(OUTPUT_FILE_NAME, O_RDWR | O_CREAT, 0644);
 			if (!IS_ERR(o_fp)){
 				printk(KERN_INFO "output file open error/n");
 				pos = 0;
 				kernel_write(o_fp, m, cnt, &pos);
-				kernel_write(o_fp, sum, sizeof(sum), &pos);
+				kernel_write(o_fp, &sum, sizeof(sum), &pos);
 				filp_close(o_fp, NULL);
 			}
 			else
