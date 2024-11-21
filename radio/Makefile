@@ -4,7 +4,7 @@ PWD = $(shell pwd)
 
 obj-m := radio.o 
 
-radio-objs := radio_main.o radio_or.o
+radio-objs := radio_main.o radio_or.o radio_read.o radio_write.o  
 
 default:
 	$(MAKE) -C $(KERNEL_DIR) M=$(PWD) modules

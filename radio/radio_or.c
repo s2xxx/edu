@@ -17,11 +17,12 @@ static int radio_cnt = 0;
 int radio_open(struct inode *inode, struct file *file)
 {
 	int rv = -EPERM;
+	int minor = iminor(file->f_inode);
 
 	if (0 == radio_cnt)
 	{
 		radio_cnt++;
-		printk(KERN_INFO MOD_NAME ": opened radio %d\n", radio_cnt);
+		printk(KERN_INFO DEV_NAME ": opened radio %d\n", minor);
 		rv = 0;
 	}
 	else
@@ -41,10 +42,11 @@ int radio_open(struct inode *inode, struct file *file)
 int radio_release(struct inode *inode, struct file *file)
 {
 	int rv = -EPERM;
+	int minor = iminor(file->f_inode);
 
 	radio_cnt--;
 
-	printk(KERN_INFO MOD_NAME ": released radio %d\n", radio_cnt);
+	printk(KERN_INFO DEV_NAME ": released radio %d\n", minor);
 
 	rv = 0;
 
