@@ -2,7 +2,7 @@ CURRENT = $(shell uname -r)
 KERNEL_DIR = /lib/modules/$(CURRENT)/build
 PWD = $(shell pwd)
 
-obj-m := lab3.o
+obj-m := lab3_1.o
 
 default:
 	$(MAKE) -C $(KERNEL_DIR) M=$(PWD) modules

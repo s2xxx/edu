@@ -17,7 +17,7 @@ int init_module(void)
 {
 	int rv = -EPERM, i = 0, cnt = 0, sum = 0;
 	char *m = NULL;
-	if ((MIN_VAL < m_size) && (MAX_VAL > m_size))
+	if ((MIN_VAL <= m_size) && (MAX_VAL >= m_size))
 	{
 		cnt = m_size * m_size;
 		if (NULL != (m = kmalloc(cnt, GFP_KERNEL)))

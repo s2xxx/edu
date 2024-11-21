@@ -12,10 +12,10 @@ MODULE_AUTHOR("s2xxx");
 
 int init_module(void)
 {
-	int val = get_random_u8();
+	int val = get_random_u32();
 	while (!CHECK_VAL(val))
 	{
-		val = get_random_u8();
+		val = get_random_u32();
 	}
 
 	printk(KERN_INFO MOD_NAME ": value %i \n", val);
