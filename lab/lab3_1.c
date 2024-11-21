@@ -19,7 +19,7 @@ static int m_min_val = 0;
 static int m_max_val = 100;
 
 module_param(m_size, int, 0644);
-MODULE_PARM_DESC(m_size, "Massiv size (1..10)"); /* todo M_SIZE_MAX */
+MODULE_PARM_DESC(m_size, "Massiv size (1..10)"); /* todo M_SIZE_MAX as param */
 
 module_param(m_min_val, int, 0644);
 MODULE_PARM_DESC(m_min_val, "Massiv minimum value");
@@ -33,8 +33,8 @@ int init_module(void)
 {
 	int rv = -EPERM, i = 0, cnt = 0, sum = 0, val = 0, len;
 	loff_t pos = 0;
-	char *m = NULL;
-	struct file *o_fp;
+	char *m = NULL; /* TODO: m is not need cause all operation is calculate imediatly */
+	struct file *o_fp = NULL;
 	char outbuff[UINT32_MAX_STR] = {0};
 	if ((0 < m_size) && (M_SIZE_MAX >= m_size) &&
 			(0 <= m_min_val) && (0 < m_max_val) &&
@@ -54,6 +54,7 @@ int init_module(void)
 
 			for (i = 0; i < cnt; i++)
 			{
+				/* TODO: need find more good solution */
 				val = get_random_u32();
 				while (!CHECK_VAL(m_min_val, m_max_val, val))
 				{
@@ -90,6 +91,10 @@ int init_module(void)
 
 			kfree(m);
 			rv = 0;
+		}
+		else
+		{
+			printk(KERN_ALERT MOD_NAME "Can`t allocate memory %d\n", cnt);
 		}
 	}
 	else

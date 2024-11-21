@@ -26,6 +26,7 @@ int init_module(void)
 	if (0 < radio_major)
 	{
 		printk(KERN_INFO MOD_NAME ": major number %d\n", radio_major);
+		rv = 0;
 	}
 	else
 	{
