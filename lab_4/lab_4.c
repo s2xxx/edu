@@ -8,7 +8,7 @@
 #define DEV_NAME "my_rand"
 
 #define M_SIZE_MAX (10)
-#define M_DEV_NUM_DEF (442)
+#define M_DEV_NUM_DEF (443)
 
 #define CHECK_VAL(_min, _max, _v) ((_min<(_v))&&(_max>(_v)))
 /* Enum, struct, union ------------------------------------------------------*/
@@ -20,7 +20,6 @@ static int m_size = 2;
 static int m_min_val = 0;
 static int m_max_val = 100;
 static int m_dev_num = M_DEV_NUM_DEF;
-static int my_rand_major = 0;
 static struct file_operations fops;
 static int already_opened = 0;
 DECLARE_WAIT_QUEUE_HEAD(WaitQ);
@@ -273,17 +272,16 @@ int init_module(void)
 			(m_min_val < m_max_val)
 	)
 	{
-		my_rand_major = register_chrdev(m_dev_num, DEV_NAME, &fops);
-
-		if (0 < my_rand_major)
+		rv = register_chrdev(m_dev_num, DEV_NAME, &fops);
+		if (0 == rv)
 		{
-			printk(KERN_INFO DEV_NAME ": major number %d\n", my_rand_major);
+			printk(KERN_INFO DEV_NAME ":Registering the character device with %d OK\n", m_dev_num);
 			rv = my_rand_generate_with_new_size();
 		}
 		else
 		{
+			printk(KERN_ERR DEV_NAME ":Failed registering the character device with %d\n", m_dev_num);
 			rv = -EPERM;
-			printk(KERN_ERR DEV_NAME ":Registering the character device failed with %d\n", my_rand_major);
 		}
 	}
 	else
@@ -297,9 +295,9 @@ int init_module(void)
 
 void cleanup_module(void)
 {
-	unregister_chrdev(my_rand_major, DEV_NAME);
+	unregister_chrdev(m_dev_num, DEV_NAME);
 	kfree(array);
-	printk(KERN_INFO MOD_NAME ": cleanup (%i)\n", my_rand_major);
+	printk(KERN_INFO MOD_NAME ": cleanup (%i)\n", m_dev_num);
 	return;
 }
 
